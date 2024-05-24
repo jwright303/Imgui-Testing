@@ -30,6 +30,31 @@ void rotate_points(int *img, int *rot_mat)
   return;
 }
 
+void update_matrix(boost::numeric::ublas::matrix<double> &RM, double x_rad, double y_rad) {
+  // Update the rotation matrix
+  RM(0,0) = cos(y_rad);  RM(0,1) = sin(x_rad) * sin(y_rad); RM(0,2) = cos(x_rad) * sin(y_rad);
+  RM(1,0) = 0;           RM(1,1) = cos(x_rad);              RM(1,2) = -sin(x_rad);
+  RM(2,0) = -sin(y_rad); RM(2,1) = sin(x_rad) * cos(y_rad); RM(2,2) = cos(x_rad) * cos(y_rad);
+}
+
+void plot_rot_data(double *x_data, double *y_data, int color_idx, 
+              boost::numeric::ublas::matrix<double> &M, char *legend) {
+  
+  // Update the array to display the results
+  for (int i = 0; i < 150; i++) {
+    x_data[i] = M(i, 0);
+    y_data[i] = M(i, 1);
+  }
+  
+  ImPlot::SetNextMarkerStyle(ImPlotMarker_Square,
+                              1,
+                              ImPlot::GetColormapColor(color_idx),
+                              IMPLOT_AUTO,
+                              ImPlot::GetColormapColor(color_idx));
+
+  ImPlot::PlotScatter(legend, x_data, y_data, 150);
+}
+
 
 int main(int argc, char ** argv) {
     int x = 0;
@@ -50,6 +75,9 @@ int main(int argc, char ** argv) {
     // typedef boost::multi_array<double, 2> array_type;
     // typedef array_type::index index;
     boost::numeric::ublas::matrix<double> A (JS_PROFILE_DATA_LEN, 3);
+    boost::numeric::ublas::matrix<double> C (JS_PROFILE_DATA_LEN, 3);
+    boost::numeric::ublas::matrix<double> D (JS_PROFILE_DATA_LEN, 3);
+    boost::numeric::ublas::matrix<double> E (JS_PROFILE_DATA_LEN, 3);
     boost::numeric::ublas::matrix<double> B (JS_PROFILE_DATA_LEN, 3);
     boost::numeric::ublas::matrix<double> RM (3, 3);
 
@@ -57,6 +85,9 @@ int main(int argc, char ** argv) {
       for (int j = 0; j < 3; j++) {
         A(i, j) = 0;
         B(i, j) = 0;
+        C(i, j) = 0;
+        D(i, j) = 0;
+        E(i, j) = 0;
         RM(i, j) = 0;
       }
     }
@@ -145,13 +176,17 @@ int main(int argc, char ** argv) {
         y_rad += M_PI/360;
         x_rad += M_PI/300;
 
-        // Update the rotation matrix
-        RM(0,0) = cos(y_rad);  RM(0,1) = sin(x_rad) * sin(y_rad); RM(0,2) = cos(x_rad) * sin(y_rad);
-        RM(1,0) = 0;           RM(1,1) = cos(x_rad);              RM(1,2) = -sin(x_rad);
-        RM(2,0) = -sin(y_rad); RM(2,1) = sin(x_rad) * cos(y_rad); RM(2,2) = cos(x_rad) * cos(y_rad);
-
-        // Apply the rotation matrix
+        update_matrix(RM, x_rad, y_rad);
         boost::numeric::ublas::axpy_prod(B, boost::numeric::ublas::trans(RM), A, true);  // A = B * RM
+
+        update_matrix(RM, x_rad + (5*M_PI/360), y_rad + (5*M_PI/300));
+        boost::numeric::ublas::axpy_prod(B, boost::numeric::ublas::trans(RM), C, true);  // A = B * RM
+
+        update_matrix(RM, x_rad + (10*M_PI/360), y_rad + (10*M_PI/300));
+        boost::numeric::ublas::axpy_prod(B, boost::numeric::ublas::trans(RM), D, true);  // A = B * RM
+        
+        update_matrix(RM, x_rad + (5*M_PI/360), y_rad + (5*M_PI/300));
+        boost::numeric::ublas::axpy_prod(B, boost::numeric::ublas::trans(RM), E, true);  // A = B * RM
 
         // Update the array to display the results
         for (int i = 0; i < 150; i++) {
@@ -196,15 +231,21 @@ int main(int argc, char ** argv) {
         ImPlot::SetupAxesLimits(-50.0, 50.0, -50.0, 50.0);
         ImPlot::SetupFinish();
 
-        char legend[32] = "Data";
+        char *lenged = new char[32];
+        strcpy(lenged, "Data ");
+        lenged[6]=char(0);
+        for (int i = 0; i < 15; i ++) {
+          update_matrix(RM, x_rad + ((i * 5) * M_PI/360), y_rad + ((i * 5) * M_PI/300));
+          boost::numeric::ublas::axpy_prod(B, boost::numeric::ublas::trans(RM), A, true);  // A = B * RM
+          
+          for (int i = 0; i < 150; i++) {
+            x_data[0][i] = A(i, 0);
+            y_data[0][i] = A(i, 1);
+          }
+          lenged[5] = char(65 + i);
+          plot_rot_data(x_data[0], y_data[0], i, A, lenged);
+        }
 
-        ImPlot::SetNextMarkerStyle(ImPlotMarker_Square,
-                                   1,
-                                   ImPlot::GetColormapColor(0),
-                                   IMPLOT_AUTO,
-                                   ImPlot::GetColormapColor(0));
-
-        ImPlot::PlotScatter(legend, x_data[0], y_data[0], 150);
 
         ImPlot::EndPlot();
         ImGui::End();
