@@ -1,0 +1,281 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "flatbuffers-build/flathash"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"add_definitions",
+			"include_directories",
+			"include"
+		],
+		"files" : 
+		[
+			"/Users/jack/Personal-Projects/W-Practice/fawkes/schema/flatbuffers-2.0.0/CMakeLists.txt",
+			"CMakeLists.txt",
+			"/Users/jack/Personal-Projects/W-Practice/fawkes/client-cpp/api/PinchotSources.cmake",
+			"/Users/jack/Personal-Projects/W-Practice/fawkes/client-cpp/api/PinchotBuildApplication.cmake",
+			"/Users/jack/Personal-Projects/W-Practice/fawkes/client-cpp/api/PinchotSchema.cmake"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 375,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 73,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 36,
+				"parent" : 3
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 37,
+				"parent" : 3
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 38,
+				"parent" : 3
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 39,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 51,
+				"parent" : 3
+			},
+			{
+				"file" : 3,
+				"parent" : 8
+			},
+			{
+				"command" : 3,
+				"file" : 3,
+				"line" : 5,
+				"parent" : 9
+			},
+			{
+				"file" : 2,
+				"parent" : 10
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 8,
+				"parent" : 11
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 15,
+				"parent" : 11
+			},
+			{
+				"command" : 3,
+				"file" : 3,
+				"line" : 6,
+				"parent" : 9
+			},
+			{
+				"file" : 4,
+				"parent" : 14
+			},
+			{
+				"command" : 2,
+				"file" : 4,
+				"line" : 15,
+				"parent" : 15
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 339,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 340,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 497,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 509,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : " -std=c++11 -stdlib=libc++ -Wall -pedantic -Werror -Wextra -Wno-unused-parameter -g -std=gnu++11 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 2,
+					"define" : "FLATBUFFERS_LOCALE_INDEPENDENT=0"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 4,
+					"path" : "/Users/jack/Personal-Projects/Shared-Libs/imgui"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "/Users/jack/Personal-Projects/W-Practice/fawkes/client-cpp/api/examples"
+				},
+				{
+					"backtrace" : 6,
+					"path" : "/Users/jack/Personal-Projects/W-Practice/imgui-testing/glfw/glfw-3.3.8/include"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/Users/jack/Personal-Projects/W-Practice/fawkes/client-cpp/api/third-party/boost-1.70.0"
+				},
+				{
+					"backtrace" : 12,
+					"path" : "/Users/jack/Personal-Projects/W-Practice/fawkes/client-cpp/api/src"
+				},
+				{
+					"backtrace" : 13,
+					"path" : "/Users/jack/Personal-Projects/W-Practice/fawkes/client-cpp/api/third-party/cxxopts-b0f67a06de3446aa97a4943ad0ad6086460b2b61/include"
+				},
+				{
+					"backtrace" : 13,
+					"path" : "/Users/jack/Personal-Projects/W-Practice/fawkes/client-cpp/api/third-party/readerwriterqueue-6b5cca00b3a4d2ec539e0ac996482b3e8aae5a84"
+				},
+				{
+					"backtrace" : 16,
+					"path" : "/Users/jack/Personal-Projects/W-Practice/fawkes/client-cpp/api/../../schema/flatbuffers-2.0.0/include"
+				},
+				{
+					"backtrace" : 17,
+					"path" : "/Users/jack/Personal-Projects/W-Practice/fawkes/schema/flatbuffers-2.0.0/include"
+				},
+				{
+					"backtrace" : 18,
+					"path" : "/Users/jack/Personal-Projects/W-Practice/fawkes/schema/flatbuffers-2.0.0/grpc"
+				},
+				{
+					"backtrace" : 19,
+					"path" : "/Users/jack/Personal-Projects/W-Practice/imgui-testing/build/flatbuffers-build/tests"
+				},
+				{
+					"backtrace" : 20,
+					"path" : "/Users/jack/Personal-Projects/W-Practice/imgui-testing/build/flatbuffers-build/samples"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "11"
+			},
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"id" : "flathash::@bea912407e3719a83c7d",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-std=c++11 -stdlib=libc++ -Wall -pedantic -Werror -Wextra -Wno-unused-parameter -g",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "",
+				"role" : "flags"
+			}
+		],
+		"language" : "CXX"
+	},
+	"name" : "flathash",
+	"nameOnDisk" : "flathash",
+	"paths" : 
+	{
+		"build" : "flatbuffers-build",
+		"source" : "/Users/jack/Personal-Projects/W-Practice/fawkes/schema/flatbuffers-2.0.0"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"path" : "/Users/jack/Personal-Projects/W-Practice/fawkes/schema/flatbuffers-2.0.0/include/flatbuffers/hash.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "/Users/jack/Personal-Projects/W-Practice/fawkes/schema/flatbuffers-2.0.0/src/flathash.cpp",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "EXECUTABLE"
+}

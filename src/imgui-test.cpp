@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <stdexcept>
 #include "imgui.h"
 #include "implot.h"
 #include <cmath>
@@ -41,10 +42,10 @@ void plot_rot_data(double *x_data, double *y_data, int color_idx,
               boost::numeric::ublas::matrix<double> &M, char *legend) {
   
   // Update the array to display the results
-  for (int i = 0; i < 150; i++) {
-    x_data[i] = M(i, 0);
-    y_data[i] = M(i, 1);
-  }
+  // for (int i = 0; i < 500; i++) {
+  //   x_data[i] = M(i, 0);
+  //   y_data[i] = M(i, 1);
+  // }
   
   ImPlot::SetNextMarkerStyle(ImPlotMarker_Square,
                               1,
@@ -52,7 +53,7 @@ void plot_rot_data(double *x_data, double *y_data, int color_idx,
                               IMPLOT_AUTO,
                               ImPlot::GetColormapColor(color_idx));
 
-  ImPlot::PlotScatter(legend, x_data, y_data, 150);
+  ImPlot::PlotScatter(legend, x_data, y_data, 300);
 }
 
 
@@ -61,17 +62,18 @@ int main(int argc, char ** argv) {
     int y = 0;
     printf("Hello World\n");
     GLFWwindow* window = nullptr;
-    double x_data[1][150];
-    double y_data[1][150];
+    double x_data[1][500];
+    double y_data[1][500];
     double theta = 0.0;
     bool mouse_state_down = false;
     ImVec2 prev {};
     
-    double rad_step = M_PI/60.0;
-    double step = M_PI/60.0;
+    double rad_step = M_PI/360.0;
+    double step = M_PI/150.0;
     double x_rad = 0.0;
     double y_rad = 0.0;
 
+    std::cout << "Setting arrays" << std::endl;
     // typedef boost::multi_array<double, 2> array_type;
     // typedef array_type::index index;
     boost::numeric::ublas::matrix<double> A (JS_PROFILE_DATA_LEN, 3);
@@ -81,6 +83,8 @@ int main(int argc, char ** argv) {
     boost::numeric::ublas::matrix<double> B (JS_PROFILE_DATA_LEN, 3);
     boost::numeric::ublas::matrix<double> RM (3, 3);
 
+    std::cout << "arrays created" << std::endl;
+    // memset(A, 0, JS_PROFILE_DATA_LEN * 3);
     for (int i = 0; i < JS_PROFILE_DATA_LEN; i++) {
       for (int j = 0; j < 3; j++) {
         A(i, j) = 0;
@@ -88,9 +92,9 @@ int main(int argc, char ** argv) {
         C(i, j) = 0;
         D(i, j) = 0;
         E(i, j) = 0;
-        RM(i, j) = 0;
       }
     }
+    std::cout << "arrays set" << std::endl;
 
     x_data[0][0] = 0.0;
     y_data[0][0] = 0.0;
@@ -138,23 +142,25 @@ int main(int argc, char ** argv) {
     int change_factor = 1.0;
 
     // Rotate the circle another step
-    for (int i = 0; i < 150; i++) {
-      B(i, 0) = 50.0 * cos(theta + (double(i) * step));
-      B(i, 1) = 50.0 * sin(theta + (double(i) * step));
-    }
+    // for (int i = 0; i < 300; i++) {
+    //   B(i, 0) = 50.0 * cos(theta + (double(i) * step));
+    //   B(i, 1) = 50.0 * sin(theta + (double(i) * step));
+    // }
     // theta += step;
 
+    std::cout << "Starting the program" << std::endl;
     while (!glfwWindowShouldClose(window)) {
+      try {
         if (!glfwGetWindowAttrib(window, GLFW_VISIBLE)) {
             continue;
         }
 
         // Rotate the circle another step
-        for (int i = 0; i < 150; i++) {
+        for (int i = 0; i < 500; i++) {
           B(i, 0) = 50.0 * cos(theta + (double(i) * step));
           B(i, 1) = 50.0 * sin(theta + (double(i) * step));
         }
-        theta += step/2;
+        // theta += step/2;
 
 
         // Check if they are shift dragging the screen
@@ -176,23 +182,23 @@ int main(int argc, char ** argv) {
         y_rad += M_PI/360;
         x_rad += M_PI/300;
 
-        update_matrix(RM, x_rad, y_rad);
-        boost::numeric::ublas::axpy_prod(B, boost::numeric::ublas::trans(RM), A, true);  // A = B * RM
+        // update_matrix(RM, x_rad, y_rad);
+        // boost::numeric::ublas::axpy_prod(B, boost::numeric::ublas::trans(RM), A, true);  // A = B * RM
 
-        update_matrix(RM, x_rad + (5*M_PI/360), y_rad + (5*M_PI/300));
-        boost::numeric::ublas::axpy_prod(B, boost::numeric::ublas::trans(RM), C, true);  // A = B * RM
+        // update_matrix(RM, x_rad + (5*M_PI/360), y_rad + (5*M_PI/300));
+        // boost::numeric::ublas::axpy_prod(B, boost::numeric::ublas::trans(RM), C, true);  // A = B * RM
 
-        update_matrix(RM, x_rad + (10*M_PI/360), y_rad + (10*M_PI/300));
-        boost::numeric::ublas::axpy_prod(B, boost::numeric::ublas::trans(RM), D, true);  // A = B * RM
+        // update_matrix(RM, x_rad + (10*M_PI/360), y_rad + (10*M_PI/300));
+        // boost::numeric::ublas::axpy_prod(B, boost::numeric::ublas::trans(RM), D, true);  // A = B * RM
         
-        update_matrix(RM, x_rad + (5*M_PI/360), y_rad + (5*M_PI/300));
-        boost::numeric::ublas::axpy_prod(B, boost::numeric::ublas::trans(RM), E, true);  // A = B * RM
+        // update_matrix(RM, x_rad + (5*M_PI/360), y_rad + (5*M_PI/300));
+        // boost::numeric::ublas::axpy_prod(B, boost::numeric::ublas::trans(RM), E, true);  // A = B * RM
 
-        // Update the array to display the results
-        for (int i = 0; i < 150; i++) {
-          x_data[0][i] = A(i, 0);
-          y_data[0][i] = A(i, 1);
-        }
+        // // Update the array to display the results
+        // for (int i = 0; i < 300; i++) {
+        //   x_data[0][i] = A(i, 0);
+        //   y_data[0][i] = A(i, 1);
+        // }
 
         glfwPollEvents();
         // Start the Dear ImGui frame
@@ -234,11 +240,11 @@ int main(int argc, char ** argv) {
         char *lenged = new char[32];
         strcpy(lenged, "Data ");
         lenged[6]=char(0);
-        for (int i = 0; i < 15; i ++) {
+        for (int i = 0; i < 30; i ++) {
           update_matrix(RM, x_rad + ((i * 5) * M_PI/360), y_rad + ((i * 5) * M_PI/300));
           boost::numeric::ublas::axpy_prod(B, boost::numeric::ublas::trans(RM), A, true);  // A = B * RM
           
-          for (int i = 0; i < 150; i++) {
+          for (int i = 0; i < 500; i++) {
             x_data[0][i] = A(i, 0);
             y_data[0][i] = A(i, 1);
           }
@@ -262,7 +268,10 @@ int main(int argc, char ** argv) {
         ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
         glfwMakeContextCurrent(window);
         glfwSwapBuffers(window);
-        
+      
+      } catch (const std::exception& e) {
+        std::cout << "Exception: " << e.what() << std::endl;
+      }
     }
 
     ImGui_ImplOpenGL2_Shutdown();
