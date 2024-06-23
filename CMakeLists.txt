@@ -3,10 +3,12 @@ project(imgui-testing)
 
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 11)
+# set(CMAKE_CXX_FLAGS "-std=c++17 -stdlib=libc++ -Wall -pedantic -Werror -Wextra -Wno-unused-parameter")
+# set(CMAKE_CXX_COMPILER /usr/bin/g++)
 
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 #set(GLFW_DIR ${CMAKE_CURRENT_SOURCE_DIR}/glfw3/glfw-3.3.8)
-set(IMGUI_SOURCE_DIR "/Users/jackwright/Personal-Projects/imgui/")
+set(IMGUI_SOURCE_DIR "/Users/jackwright/Personal-Projects/imgui")
 
 set(OpenGL_GL_PREFERENCE GLVND)
 find_package(OpenGL REQUIRED)
@@ -38,7 +40,7 @@ include_directories(${IMGUI_SOURCE_DIR}/backends)
 include_directories(${PINCHOT_API_ROOT_DIR}/examples)
 include_directories(${PINCHOT_API_ROOT_DIR}/third-party/boost-1.70.0)
 include_directories("/Users/jackwright/Personal-Projects/glfw-3.4/include")
-include_directories("/Users/jackwright/Personal-Projects/boost")
+# include_directories("/Users/jackwright/Personal-Projects/boost")
 
 # set(GLFW_BUILD_EXAMPLES OFF)
 # set(GLFW_BUILD_TESTS OFF)
