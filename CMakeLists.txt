@@ -6,11 +6,11 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 #set(GLFW_DIR ${CMAKE_CURRENT_SOURCE_DIR}/glfw3/glfw-3.3.8)
-set(IMGUI_SOURCE_DIR "/Users/jack/Personal-Projects/Shared-Libs/imgui/")
+set(IMGUI_SOURCE_DIR "/Users/jackwright/Personal-Projects/imgui/")
 
 set(OpenGL_GL_PREFERENCE GLVND)
 find_package(OpenGL REQUIRED)
-find_library(GLFW glfw3 PAtHS "/Users/jack/Personal-Projects/W-Practice/imgui-testing/glfw/glfw-3.3.8/lib-universal")
+find_library(GLFW glfw3 PAtHS "/Users/jackwright/Personal-Projects/glfw-3.4/build/src")
 #set(GLFW_LIBRARY ${CMAKE_CURRENT_BINARY_DIR}/glfw-build/src/libglfw3.a)
 
 set(PINCHOT_API_ROOT_DIR "" CACHE FILEPATH "this is a dumb cmake command")
@@ -34,9 +34,11 @@ file(GLOB PROJECT_SOURCES
   ${IMGUI_SOURCE_DIR}/misc/debuggers/imgui.natvis)
 
 include_directories(${IMGUI_SOURCE_DIR})
+include_directories(${IMGUI_SOURCE_DIR}/backends)
 include_directories(${PINCHOT_API_ROOT_DIR}/examples)
-include_directories("/Users/jack/Personal-Projects/W-Practice/imgui-testing/glfw/glfw-3.3.8/include")
 include_directories(${PINCHOT_API_ROOT_DIR}/third-party/boost-1.70.0)
+include_directories("/Users/jackwright/Personal-Projects/glfw-3.4/include")
+include_directories("/Users/jackwright/Personal-Projects/boost")
 
 # set(GLFW_BUILD_EXAMPLES OFF)
 # set(GLFW_BUILD_TESTS OFF)
