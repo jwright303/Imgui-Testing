@@ -149,6 +149,7 @@ int main(int argc, char ** argv) {
     // theta += step;
 
     std::cout << "Starting the program" << std::endl;
+    ImPlotInputMap& map = ImPlot::GetInputMap();
     while (!glfwWindowShouldClose(window)) {
       try {
         if (!glfwGetWindowAttrib(window, GLFW_VISIBLE)) {
@@ -164,7 +165,12 @@ int main(int argc, char ** argv) {
 
 
         // Check if they are shift dragging the screen
+        map.PanMod = 0;
         if (ImGui::IsKeyDown(ImGuiKey_ModShift)) {
+          if (ImGui::IsKeyDown(ImGuiKey_R)) {
+            map.PanMod = 1;
+          }
+
           if (prev.x == 0 && prev.y == 0) {
             prev = ImGui::GetMouseDragDelta(ImGuiMouseButton_Left);
           } else {
@@ -229,6 +235,10 @@ int main(int argc, char ** argv) {
                                               "Y [inches]",
                                               ImVec2(-1, -1),
                                               ImPlotFlags_Equal);
+        
+        // ImPlot::SetupAxis(ImAxis_X1, nullptr, ImPlotAxisFlags_Lock);
+        // ImPlot::SetupAxis(ImAxis_Y1, nullptr, ImPlotAxisFlags_Lock);
+
         if (!is_plot_sucess) {
             continue;
         }
@@ -240,14 +250,21 @@ int main(int argc, char ** argv) {
         char *lenged = new char[32];
         strcpy(lenged, "Data ");
         lenged[6]=char(0);
-        for (int i = 0; i < 30; i ++) {
+
+        float circle_scalar = 1.0;
+        float circle_scalar_adj = 0.01;
+
+        for (int i = 0; i < 90; i ++) {
           update_matrix(RM, x_rad + ((i * 5) * M_PI/360), y_rad + ((i * 5) * M_PI/300));
           boost::numeric::ublas::axpy_prod(B, boost::numeric::ublas::trans(RM), A, true);  // A = B * RM
+
+          circle_scalar += circle_scalar_adj;
           
           for (int i = 0; i < 500; i++) {
-            x_data[0][i] = A(i, 0);
-            y_data[0][i] = A(i, 1);
+            x_data[0][i] = A(i, 0) * circle_scalar;
+            y_data[0][i] = A(i, 1) * circle_scalar;
           }
+
           lenged[5] = char(65 + i);
           plot_rot_data(x_data[0], y_data[0], i, A, lenged);
         }
